@@ -1,0 +1,14 @@
+---
+default_packages:
+  - biber
+  - texlive
+  - texlive-bibtex-extra
+  - texlive-fonts-extra
+  - texlive-lang-english
+  - texlive-lang-german
+  - texlive-latex-extra
+  - texlive-plain-generic
+  - texlive-publishers
+  - texlive-science
+  - texlive-science-doc
+  - texlive-extra-utils

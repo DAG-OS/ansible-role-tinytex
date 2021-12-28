@@ -1,0 +1,20 @@
+---
+argument_specs:
+  main:
+    options:
+      state:
+        description: "Defines the state this role should strive towards."
+        type: "str"
+        required: false
+        default: "present"
+        choices:
+          - "present"
+          - "install"
+      vendor:
+        description: "Defines the LaTeX vendor to install."
+        type: "str"
+        required: false
+        default: "tinytex"
+        choices:
+          - "tinytex"
+          - "texlive"

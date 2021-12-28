@@ -1,0 +1,65 @@
+---
+# Preflight checks
+- name: Check dependencies are present
+  ansible.builtin.include_tasks: check-package.yml
+  loop:
+    - bash
+    - wget
+    - perl
+# TODO: Check if tlmgr or tinytex is already installed
+# TODO: If it is installed get list of installed packages
+# TL_INSTALLED_PKGS=$(tlmgr info --list --only-installed --data name | tr '\n' ' ')
+
+# Installation
+- name: Download and run installer
+  ansible.builtin.shell:
+    cmd: 'wget -qO- "https://yihui.org/tinytex/install-bin-unix.sh" | sh -s - --admin --no-path'
+    creates: "{{ install_dir }}"
+# TODO: Might be best to remove existing installations to guarantee clean update
+- name: Copy installation to {{ install_dir }}
+  ansible.builtin.shell:
+    cmd: "mv {{ default_install_dir }} {{ install_dir }}"
+    creates: "{{ install_dir }}"
+
+# Configuration
+- name: Give everyone write permissions on installation folders
+  ansible.builtin.file:
+    path: "{{ install_dir }}"
+    mode: "a+w"
+    recurse: true
+  # Otherwise, this will always be changed, even though it is idempotent
+  changed_when: false
+- name: Give everyone executable rights on installed binaries
+  ansible.builtin.file:
+    path: "{{ install_dir }}/bin"
+    mode: "a+wx"
+    recurse: true
+  # Otherwise, this will always be changed, even though it is idempotent
+  changed_when: false
+- name: Add installed binaries to path
+  # This at least needs sudo rights
+  ansible.builtin.command:
+    chdir: "{{ install_dir }}/bin/x86_64-linux"
+    cmd: "{{ item }}"
+  # At this point there is no easy way to figure out if this has been done before, ergo we do not check for changes
+  changed_when: false
+  loop:
+    - ./tlmgr option sys_bin /usr/bin
+    - ./tlmgr path add
+
+# Install packages
+- name: Combine default packages with provided packages
+  ansible.builtin.set_fact:
+    merged_packages: "{{ default_packages | unique(packages) }}"
+- name: Install packages
+  ansible.builtin.command:
+    argv:
+      - tlmgr
+      - install
+      - "{{ item }}"
+  register: tlmgr_output
+  changed_when: "'package already present' not in tlmgr_output.stdout"
+  loop: "{{ merged_packages }}"
+
+# TODO: Reinstall packages that were already installed
+# tlmgr install $TL_INSTALLED_PKGS

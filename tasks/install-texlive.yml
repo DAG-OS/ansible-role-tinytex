@@ -1,0 +1,13 @@
+---
+- name: Combine default packages with provided packages
+  ansible.builtin.set_fact:
+    merged_packages: "{{ default_packages | unique(packages) }}"
+- debug:
+    var: merged_packages
+- name: Install TeXLive via apt
+  become: yes
+  ansible.builtin.apt:
+    state: present
+    install_recommends: no
+    name: "{{ merged_packages }}"
+# TODO: Install with other package managers

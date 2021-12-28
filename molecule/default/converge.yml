@@ -1,0 +1,22 @@
+---
+- name: Converge
+  hosts: all
+  pre_tasks:
+    - name: Update apt cache.
+      apt: update_cache=true cache_valid_time=600
+      when: ansible_os_family == 'Debian'
+    - name: Install dependencies
+      ansible.builtin.package:
+        name:
+          - wget
+          - perl
+        state: present
+   #- name: Ensure locale is set correctly
+   #  ansible.builtin.package:
+   #    name: glibc-common
+   #    state: present
+  roles:
+    - role: dagos.latex
+      vars:
+        state: present
+        vendor: tinytex

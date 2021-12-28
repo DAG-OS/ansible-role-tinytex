@@ -1,0 +1,8 @@
+---
+# By default we ensure that latex is present.
+# Allowed values: present, install
+state: present
+
+# Which type of vendor should be used?
+# Allowed values: tinytex, texlive
+vendor: tinytex

@@ -1,0 +1,26 @@
+---
+- name: Verify
+  hosts: all
+  gather_facts: false
+  tasks:
+    - name: Check if installation folder exists 
+      ansible.builtin.file:
+        path: /opt/tinytex
+        state: directory
+      check_mode: yes
+      register: result
+    - name: Fail if the installation folder does not exist
+      ansible.builtin.assert:
+        that: "'{{ result.state }}' == 'directory'"
+        fail_msg: "Expected 'directory' state for '{{ result.path }}' but got '{{ result.path }}'"
+    - name: Fail if the installation folder has wrong permissions
+      ansible.builtin.assert:
+        that: "'{{ result.mode }}' == '0777'"
+        fail_msg: "Expected '0777' mode for '{{ result.path }}' but got '{{ result.mode }}'"
+    - name: Check if installed binaries are on the path
+      ansible.builtin.command: command -v tlmgr
+      register: result
+    - name: Fail if installed binares are not on the path
+      ansible.builtin.assert:
+        that: "'{{ result.stdout }}' == '/usr/bin/tlmgr'"
+        fail_msg: "At least some of the installed binaries are not on the path."

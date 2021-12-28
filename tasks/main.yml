@@ -1,0 +1,8 @@
+---
+- name: Include vars for {{ vendor }}
+  ansible.builtin.include_vars:
+    file: "{{ item }}"
+  loop:
+    - main/common.yml
+    - "main/{{ vendor }}.yml"
+- ansible.builtin.import_tasks: "{{ state }}.yml"
