@@ -31,12 +31,8 @@ jobs:
       - name: Install test dependencies.
         run: pip3 install ansible molecule[docker] docker
 
-      - name: Replace Molecule driver.
-        uses: jacobtomlinson/gha-find-replace@v2
-        with:
-          find: "podman"
-          replace: "docker"
-          include: "molecule/**/molecule.yml"
+      - name: Use CI specific Molecule configuration.
+        run: mv molecule/default/molecule-ci.yml molecule/default/molecule.yml
 
       - name: Run Molecule tests.
         run: molecule test
