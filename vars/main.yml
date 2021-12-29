@@ -1,0 +1,8 @@
+---
+# This is the default directory the tinytex installer installs to
+default_install_dir: ~/.TinyTeX
+
+# These packages are installed by default after installing tinytex
+default_packages:
+  - caption
+  - csquotes

@@ -11,12 +11,8 @@
           - wget
           - perl
         state: present
-   #- name: Ensure locale is set correctly
-   #  ansible.builtin.package:
-   #    name: glibc-common
-   #    state: present
   roles:
-    - role: dagos.latex
+    - role: dagos.tinytex
       vars:
         state: present
         vendor: tinytex

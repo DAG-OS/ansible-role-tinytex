@@ -10,11 +10,12 @@ argument_specs:
         choices:
           - "present"
           - "install"
-      vendor:
-        description: "Defines the LaTeX vendor to install."
+      install_dir:
+        description: "Defines where to install TinyTeX to."
         type: "str"
         required: false
-        default: "tinytex"
-        choices:
-          - "tinytex"
-          - "texlive"
+        default: "/opt/tinytex"
+      packages:
+        description: "Which packages to install with tlmgr after a successful install?"
+        type: "list"
+        required: false

@@ -1,15 +1,15 @@
-# LaTeX
+# TinyTeX
 
-A role for installing LaTeX.
+A role for installing TinyTeX in a multi-user setup.
 
 ## Requirements
 
-When choosing the TeXLive vendor as installation option root privileges are required.
+Root privileges are required for a successful installation.
 
 ## Role Variables
 
 - `state`: Either `present` or `install`
-- `vendor`: Either `tinytex` or `texlive`
+- `install_dir`: A path where TinyTeX should be installed
 - `packages`: A list of packages to install
 
 ## Dependencies
@@ -22,8 +22,7 @@ None.
 - name: Install LaTeX
   hosts: all
   roles:
-    - role: dagos.latex
+    - role: dagos.tinytex
       vars:
         state: present
-        vendor: tinytex
 ```

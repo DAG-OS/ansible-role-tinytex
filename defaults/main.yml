@@ -1,0 +1,10 @@
+---
+# By default ensure that TinyTeX is present.
+# Allowed values: present, install
+state: present
+
+# Where to install tinytex to?
+install_dir: /opt/tinytex
+
+# Which packages to install with tlmgr after installing tinytex?
+packages: []
