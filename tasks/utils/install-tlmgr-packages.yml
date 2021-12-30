@@ -1,0 +1,7 @@
+---
+# This task requires the previous execution of `utils/get-installed-tlmgr-packages.yml` for a list of installed tlmgr packages.
+# It also expects a list of packages to install via `tlmgr_packages`.
+- name: "Install provided packages via tlmgr"
+  when: installed_packages.stdout.find(item) == -1
+  ansible.builtin.command: "tlmgr install {{ item }}"
+  loop: "{{ tlmgr_packages }}"

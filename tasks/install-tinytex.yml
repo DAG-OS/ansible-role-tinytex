@@ -1,0 +1,42 @@
+---
+# Installation
+- name: Download installer
+  ansible.builtin.get_url:
+    url: https://yihui.org/tinytex/install-bin-unix.sh
+    dest: /tmp
+  register: installer_download
+- name: Run installer
+  ansible.builtin.command:
+    cmd: "bash {{ installer_download.dest }} --admin --no-path"
+    creates: "{{ install_dir }}"
+- name: Move installation to {{ install_dir }}
+  ansible.builtin.command:
+    cmd: "mv {{ default_install_dir }} {{ install_dir }}"
+    creates: "{{ install_dir }}"
+
+# Configuration
+- name: Give everyone write permissions on installation folders
+  ansible.builtin.file:
+    path: "{{ install_dir }}"
+    mode: "a+w"
+    recurse: true
+- name: Give everyone executable rights on installed binaries
+  ansible.builtin.file:
+    path: "{{ install_dir }}/bin"
+    mode: "a+wx"
+    recurse: true
+- name: Add installed binaries to path
+  ansible.builtin.command:
+    chdir: "{{ install_dir }}/bin/x86_64-linux"
+    cmd: "{{ item }}"
+  loop:
+    - ./tlmgr option sys_bin /usr/bin
+    - ./tlmgr path add
+
+# Install packages
+- ansible.builtin.import_tasks: utils/get-installed-tlmgr-packages.yml
+- name: Ensure provided packages are unique
+  ansible.builtin.set_fact:
+    tlmgr_packages: "{{ packages | unique }}"
+- name: Install packages
+  ansible.builtin.include_tasks: utils/install-tlmgr-packages.yml

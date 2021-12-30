@@ -1,0 +1,18 @@
+---
+- ansible.builtin.import_tasks: utils/get-installed-tlmgr-packages.yml
+- name: Store already installed packages for later filtering
+  ansible.builtin.set_fact:
+    previous_tlmgr_packages: "{{ installed_packages.stdout_lines }}"
+
+- name: Remove old installation
+  ansible.builtin.file:
+    path: "{{ install_dir }}"
+    state: absent
+- ansible.builtin.import_tasks: install-tinytex.yml
+
+# Reinstall previously installed packages
+- ansible.builtin.import_tasks: utils/get-installed-tlmgr-packages.yml
+- name: Filter packages for installation
+  ansible.builtin.set_fact:
+    tlmgr_packages: "{{ previous_tlmgr_packages | difference(installed_packages.stdout_lines) | unique }}"
+- ansible.builtin.import_tasks: utils/install-tlmgr-packages.yml

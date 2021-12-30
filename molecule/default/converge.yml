@@ -15,4 +15,10 @@
     - role: dagos.tinytex
       vars:
         state: present
-        vendor: tinytex
+        packages:
+          - adjustbox
+    - role: dagos.tinytex
+      vars:
+        state: latest
+        packages:
+          - zref

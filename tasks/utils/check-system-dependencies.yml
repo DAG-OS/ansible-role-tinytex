@@ -1,0 +1,7 @@
+---
+- name: Check dependencies are present
+  ansible.builtin.include_tasks: utils/check-system-dependency.yml
+  loop:
+    - bash
+    - wget
+    - perl

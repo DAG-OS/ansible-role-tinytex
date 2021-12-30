@@ -1,0 +1,6 @@
+---
+- name: Get list of installed tlmgr packages
+  ansible.builtin.command:
+    cmd: tlmgr info --list --only-installed --data name
+  changed_when: false
+  register: installed_packages

@@ -1,0 +1,8 @@
+---
+- name: Check if TinyTeX is already installed
+  ansible.builtin.file:
+    path: "{{ install_dir }}"
+    state: directory
+    mode: 0777
+  check_mode: true
+  register: install_check

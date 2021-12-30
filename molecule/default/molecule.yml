@@ -11,3 +11,19 @@ provisioner:
   name: ansible
 verifier:
   name: ansible
+scenario:
+  test_sequence:
+    - dependency
+    - lint
+    - cleanup
+    - destroy
+    - syntax
+    - create
+    - prepare
+    - converge
+    # By testing present and latest states time is saved but idempotence is not testable
+    # - idempotence
+    - side_effect
+    - verify
+    - cleanup
+    - destroy

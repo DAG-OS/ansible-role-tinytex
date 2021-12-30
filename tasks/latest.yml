@@ -1,0 +1,10 @@
+---
+- ansible.builtin.import_tasks: utils/check-tinytex-installation.yml
+
+- name: Install TinyTeX if not yet done
+  when: install_check.state is undefined
+  ansible.builtin.include_tasks: install.yml
+
+- name: Update TinyTeX if it was already installed
+  when: install_check.state is defined and install_check.state == "directory"
+  ansible.builtin.include_tasks: update.yml

@@ -1,71 +1,9 @@
 ---
 # Preflight checks
-- name: Check if TinyTeX is already installed
-  ansible.builtin.file:
-    path: "{{ install_dir }}"
-    state: directory
-    mode: 0777
-  check_mode: true
-  register: check_result
-- name: Skip installation if TinyTeX is already installed
-  ansible.builtin.meta: end_host
-  when: check_result.state is defined and check_result.state == 'directory'
-- name: Check dependencies are present
-  ansible.builtin.include_tasks: check-package.yml
-  loop:
-    - bash
-    - wget
-    - perl
-
-# TODO: On update: Get list of installed packages
-# TL_INSTALLED_PKGS=$(tlmgr info --list --only-installed --data name | tr '\n' ' ')
-# TODO: On update: Reinstall packages that were already installed
-# tlmgr install $TL_INSTALLED_PKGS
+- ansible.builtin.import_tasks: utils/check-tinytex-installation.yml
+- ansible.builtin.include_tasks: utils/check-system-dependencies.yml
+  when: install_check.state is undefined
 
 # Installation
-- name: Download installer
-  ansible.builtin.get_url:
-    url: https://yihui.org/tinytex/install-bin-unix.sh
-    dest: /tmp
-  register: installer_download
-- name: Run installer
-  ansible.builtin.command:
-    cmd: "bash {{ installer_download.dest }} --admin --no-path"
-    creates: "{{ install_dir }}"
-- name: Move installation to {{ install_dir }}
-  ansible.builtin.command:
-    cmd: "mv {{ default_install_dir }} {{ install_dir }}"
-    creates: "{{ install_dir }}"
-
-# Configuration
-- name: Give everyone write permissions on installation folders
-  ansible.builtin.file:
-    path: "{{ install_dir }}"
-    mode: "a+w"
-    recurse: true
-- name: Give everyone executable rights on installed binaries
-  ansible.builtin.file:
-    path: "{{ install_dir }}/bin"
-    mode: "a+wx"
-    recurse: true
-- name: Add installed binaries to path
-  ansible.builtin.command:
-    chdir: "{{ install_dir }}/bin/x86_64-linux"
-    cmd: "{{ item }}"
-  loop:
-    - ./tlmgr option sys_bin /usr/bin
-    - ./tlmgr path add
-
-# Install packages
-- name: Combine default packages with provided packages
-  ansible.builtin.set_fact:
-    merged_packages: "{{ default_packages | unique(packages) }}"
-- name: Install packages
-  ansible.builtin.command:
-    argv:
-      - tlmgr
-      - install
-      - "{{ item }}"
-  register: tlmgr_output
-  changed_when: "'package already present' not in tlmgr_output.stdout"
-  loop: "{{ merged_packages }}"
+- ansible.builtin.include_tasks: install-tinytex.yml
+  when: install_check.state is undefined
