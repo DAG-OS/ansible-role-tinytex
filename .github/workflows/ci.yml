@@ -21,19 +21,32 @@ jobs:
     steps:
       - name: Check out the codebase.
         uses: actions/checkout@v2
+        with:
+          fetch-depth: 2
+
+      - name: Check if any ansible related files changed.
+        id: changed-ansible-files
+        uses: tj-actions/changed-files@v12.2
+        with:
+          files: |
+            ^(defaults|files|handlers|meta|molecule|tasks|templates|vars)/
 
       - name: Set up Python 3.
+        if: steps.changed-ansible-files.outputs.any_changed == 'true'
         uses: actions/setup-python@v2
         with:
           python-version: '3.x'
 
       - name: Install test dependencies.
+        if: steps.changed-ansible-files.outputs.any_changed == 'true'
         run: pip3 install ansible molecule[docker] docker
 
       - name: Use CI specific Molecule configuration.
+        if: steps.changed-ansible-files.outputs.any_changed == 'true'
         run: mv molecule/default/molecule-ci.yml molecule/default/molecule.yml
 
       - name: Run Molecule tests.
+        if: steps.changed-ansible-files.outputs.any_changed == 'true'
         run: molecule test
         env:
           PY_COLORS: '1'
