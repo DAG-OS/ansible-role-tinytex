@@ -40,13 +40,3 @@ jobs:
           ANSIBLE_FORCE_COLOR: '1'
           MOLECULE_DISTRO: ${{ matrix.distro }}
           MOLECULE_DRIVER: 'docker'
-
-  release:
-    needs:
-      - molecule
-    runs-on: ubuntu-latest
-    steps:
-      - name: galaxy
-        uses: robertdebock/galaxy-action@1.1.1
-        with:
-          galaxy_api_key: ${{ secrets.galaxy_api_key }}
