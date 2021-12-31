@@ -1,0 +1,19 @@
+= Changelog
+
+:base: https://github.com/DAG-OS/ansible-role-tinytex
+//:v1_0_0: {base}/compare/fe99b32\...v1.0.0[v1.0.0]
+:unreleased: {base}/compare/fe99b32\...HEAD[Unreleased]
+
+All notable changes to this project will be documented in this file.
+
+The format is based on https://keepachangelog.com/en/1.1.0/[Keep a Changelog],
+and this project adheres to https://semver.org/spec/v2.0.0.html[Semantic Versioning].
+
+== {unreleased}
+
+This section tracks upcoming changes that are not yet released.
+
+=== Added
+
+* Ansible role for installing https://yihui.org/tinytex/[TinyTeX] in a multi-user setup.
+* Role testing via https://molecule.readthedocs.io/en/latest/[Molecule].
