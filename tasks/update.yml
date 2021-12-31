@@ -4,10 +4,7 @@
   ansible.builtin.set_fact:
     previous_tlmgr_packages: "{{ installed_packages.stdout_lines }}"
 
-- name: Remove old installation
-  ansible.builtin.file:
-    path: "{{ install_dir }}"
-    state: absent
+- ansible.builtin.import_tasks: absent.yml
 - ansible.builtin.import_tasks: install-tinytex.yml
 
 # Reinstall previously installed packages

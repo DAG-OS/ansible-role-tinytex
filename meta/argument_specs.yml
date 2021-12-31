@@ -11,6 +11,7 @@ argument_specs:
           - "present"
           - "install"
           - "latest"
+          - "absent"
       install_dir:
         description: "Defines where to install TinyTeX to."
         type: "str"

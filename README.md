@@ -12,6 +12,7 @@ Root privileges are required for a successful installation.
   * `present`: Ensures TinyTeX is installed.
   * `install`: Ensures TinyTeX is installed.
   * `latest`: Ensures TinyTeX is installed and updated.
+  * `absent`: Removes the TinyTeX installation.
 * `install_dir`: A path where TinyTeX should be installed, defaults to `/opt/tinytex`
 * `packages`: A list of packages to install
 

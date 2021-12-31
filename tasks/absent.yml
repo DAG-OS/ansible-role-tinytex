@@ -1,0 +1,9 @@
+---
+- name: Remove binaries from path
+  ansible.builtin.command:
+    chdir: "{{ install_dir }}/bin/x86_64-linux"
+    cmd: tlmgr path remove
+- name: Remove TinyTeX installation
+  ansible.builtin.file:
+    path: "{{ install_dir }}"
+    state: absent
