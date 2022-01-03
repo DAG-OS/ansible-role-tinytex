@@ -17,3 +17,5 @@ This section tracks upcoming changes that are not yet released.
 
 * Ansible role for installing https://yihui.org/tinytex/[TinyTeX] in a multi-user setup.
 * Role testing via https://molecule.readthedocs.io/en/latest/[Molecule].
+* GitHub issue templates.
+* Contribution guide.
