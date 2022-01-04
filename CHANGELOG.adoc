@@ -19,3 +19,6 @@ This section tracks upcoming changes that are not yet released.
 * Role testing via https://molecule.readthedocs.io/en/latest/[Molecule].
 * GitHub issue templates.
 * Contribution guide.
+* GitHub issue templates.
+* Contribution guide.
+* Antora based documentation.
