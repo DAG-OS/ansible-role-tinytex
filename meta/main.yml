@@ -2,24 +2,22 @@ galaxy_info:
   author: Lucas Resch
   role_name: tinytex
   namespace: dagos
-  description: A role for provisioning LaTeX distributions.
-
+  description: A role for installing TinyTeX in a multi-user setup.
   license: MIT
-
-  min_ansible_version: 2.10
+  min_ansible_version: "2.10"
 
   platforms:
-    - name: CentOS
+    - name: EL
       versions:
         - 8
     - name: Ubuntu
       versions:
-        - 20.04
+        - focal
+        - hirsute
 
   galaxy_tags:
     - latex
     - tinytex
-    - provisioning
     # NOTE: A tag is limited to a single word comprised of alphanumeric characters.
     #       Maximum 20 tags per role.
 
