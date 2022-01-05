@@ -1,6 +1,6 @@
 ---
 title: "Ansible role: dagos.tinytex"
 name: dagos.tinytex
-version: trunk
+version: v1.0.x
 nav:
   - modules/ROOT/nav.adoc
