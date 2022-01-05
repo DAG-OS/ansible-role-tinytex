@@ -2,7 +2,7 @@
 
 :base: https://github.com/DAG-OS/ansible-role-tinytex
 :v1_0_0: {base}/compare/fe99b32\...v1.0.0[v1.0.0]
-:unreleased: {base}/compare/v1.0.0...HEAD[Unreleased]
+:unreleased: {base}/compare/v1.0.0\...HEAD[Unreleased]
 
 All notable changes to this project will be documented in this file.
 
@@ -19,8 +19,6 @@ This section tracks upcoming changes that are not yet released.
 
 * Ansible role for installing https://yihui.org/tinytex/[TinyTeX] in a multi-user setup.
 * Role testing via https://molecule.readthedocs.io/en/latest/[Molecule].
-* GitHub issue templates.
-* Contribution guide.
 * GitHub issue templates.
 * Contribution guide.
 * Antora based documentation.
