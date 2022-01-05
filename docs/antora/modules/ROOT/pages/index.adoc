@@ -1,5 +1,10 @@
 # Ansible role: dagos.tinytex
 
+image:https://github.com/DAG-OS/ansible-role-tinytex/actions/workflows/ci.yml/badge.svg?branch=trunk[CI,link=https://github.com/DAG-OS/ansible-role-tinytex/actions/workflows/ci.yml]
+image:https://github.com/DAG-OS/ansible-role-tinytex/actions/workflows/release.yml/badge.svg[Release,link=https://github.com/DAG-OS/ansible-role-tinytex/actions/workflows/release.yml]
+image:https://img.shields.io/ansible/quality/57500?logo=ansible[Quality,link=https://galaxy.ansible.com/dagos/tinytex]
+image:https://img.shields.io/ansible/role/d/57500?logo=ansible[Downloads,link=https://galaxy.ansible.com/dagos/tinytex]
+
 A role for installing https://yihui.org/tinytex/[TinyTeX] in a multi-user setup.
 
 ## Requirements
