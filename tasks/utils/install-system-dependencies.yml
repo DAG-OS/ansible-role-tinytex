@@ -5,6 +5,6 @@
 - name: Install dependencies
   ansible.builtin.package:
     name:
-      - perl-base
+      - perl
       - wget
     state: present
