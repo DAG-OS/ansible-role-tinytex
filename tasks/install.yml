@@ -1,9 +1,9 @@
 ---
 # Preflight checks
 - ansible.builtin.import_tasks: utils/check-tinytex-installation.yml
-- ansible.builtin.include_tasks: utils/check-system-dependencies.yml
-  when: install_check.state is undefined
 
 # Installation
+- ansible.builtin.include_tasks: utils/install-system-dependencies.yml
+  when: install_check.state is undefined
 - ansible.builtin.include_tasks: install-tinytex.yml
   when: install_check.state is undefined

@@ -20,6 +20,8 @@ This section tracks upcoming changes that are not yet released.
 === Changed
 
 * Removed `bash` as implicit dependency.
+* Required system dependencies are now installed by the role.
+  They include `wget` and `perl-base`.
 
 === Fixed
 

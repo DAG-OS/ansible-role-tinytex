@@ -1,0 +1,10 @@
+---
+- name: Update apt cache
+  ansible.builtin.apt: update_cache=true cache_valid_time=600
+  when: ansible_os_family == 'Debian'
+- name: Install dependencies
+  ansible.builtin.package:
+    name:
+      - perl-base
+      - wget
+    state: present
