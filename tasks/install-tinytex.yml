@@ -7,7 +7,7 @@
   register: installer_download
 - name: Run installer
   ansible.builtin.command:
-    cmd: "bash {{ installer_download.dest }} --admin --no-path"
+    cmd: "sh {{ installer_download.dest }} --admin --no-path"
     creates: "{{ install_dir }}"
 - name: Move installation to {{ install_dir }}
   ansible.builtin.command:

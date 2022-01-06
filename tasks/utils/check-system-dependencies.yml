@@ -1,7 +1,11 @@
 ---
 - name: Check dependencies are present
-  ansible.builtin.include_tasks: utils/check-system-dependency.yml
+  ansible.builtin.package:
+    name: "{{ item }}"
+    state: present
+  check_mode: yes
+  register: result
+  failed_when: result.changed is true
   loop:
-    - bash
-    - wget
     - perl
+    - wget

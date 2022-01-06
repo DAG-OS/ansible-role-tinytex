@@ -8,8 +8,8 @@
     - name: Install dependencies
       ansible.builtin.package:
         name:
-          - wget
           - perl
+          - wget
         state: present
   roles:
     - role: dagos.tinytex

@@ -10,29 +10,20 @@
         mode: 0777
       check_mode: true
       register: result
-    - name: Fail if the installation folder does not exist
-      ansible.builtin.assert:
-        that: "'{{ result.state }}' == 'directory'"
-        fail_msg: "Expected 'directory' state for '{{ result.path }}' but got '{{ result.path }}'"
-    - name: Fail if the installation folder has wrong permissions
-      ansible.builtin.assert:
-        that: "'{{ result.mode }}' == '0777'"
-        fail_msg: "Expected '0777' mode for '{{ result.path }}' but got '{{ result.mode }}'"
+      failed_when: result.state != 'directory' or result.mode != '0777'
 
     - name: Check if installed binaries are on the path
       ansible.builtin.command: tlmgr --version
       changed_when: false
       register: result
-    - name: Fail if installed binares are not on the path
-      ansible.builtin.assert:
-        that: "'{{ result.stdout_lines[1] }}' == 'tlmgr using installation: /opt/tinytex'"
-        fail_msg: "At least some of the installed binaries are not on the path."
+      failed_when: "result.stdout_lines[1] != 'tlmgr using installation: /opt/tinytex'"
 
     - ansible.builtin.import_tasks: ../../tasks/utils/get-installed-tlmgr-packages.yml
     - name: Check if packages were installed correctly
       ansible.builtin.assert:
         that: "{{ installed_packages.stdout.find(item) >= 0 }}"
         fail_msg: "Installed packages: {{ installed_packages.stdout }}"
+        quiet: true
       loop:
         - adjustbox # Provided via converge, role present
         - zref # Provided via converge, role latest

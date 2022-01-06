@@ -17,6 +17,10 @@ This section tracks upcoming changes that are not yet released.
 
 * Badges to Antora documentation.
 
+=== Changed
+
+* Removed `bash` as implicit dependency.
+
 === Fixed
 
 * Run CI actions on version branches.
